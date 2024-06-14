@@ -1,23 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do List</title>
+    <title>Lista de Tarefas</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>To-Do List</h1>
-        <h3>Adicione suas tarefas</h3>
+        <h1>Lista de Tarefas</h1>
         <div class="input-container">
-            <input type="text" id="taskInput" placeholder="Adicione uma nova tarefa...">
-            <button id="addTaskButton">Adicionar</button>
+            <input type="text" id="taskInput" placeholder="Adicionar uma nova tarefa...">
+            <button id="addTaskButton">Adicionar Tarefa</button>
         </div>
         <ul id="taskList"></ul>
+        <button id="viewTasksButton">Ver Todas as Tarefas</button>
     </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Todas as Tarefas</h2>
+            <ul id="modalTaskList"></ul>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 
