@@ -25,8 +25,47 @@
             <span class="close-button">&times;</span>
             <h2>Todas as Tarefas</h2>
             <ul id="modalTaskList"></ul>
+            <button id="generateReport" class="btn btn-primary mt-3">Gerar Relatório PDF</button>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+        integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script>
+        document.getElementById('generateReport').addEventListener('click', function () {
+            gerarRelatorioPDF();
+        });
+
+        function gerarRelatorioPDF() {
+            const reportContent = document.getElementById("modal");
+            html2canvas(reportContent).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const imgWidth = 595.28; // largura em pontos para a4
+                const pageHeight = 841.89; // altura em pontos para a4
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+
+                pdf.save('relatorio.pdf');
+            }).catch(function (error) {
+                console.error('Erro ao gerar o PDF: ', error);
+            });
+        }
+    </script>
         </div>
     </div>
+
 
     <script src="script.js"></script>
 </body>
